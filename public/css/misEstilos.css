@@ -1,0 +1,16 @@
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.btn {
+  margin-top: 10px;
+}
