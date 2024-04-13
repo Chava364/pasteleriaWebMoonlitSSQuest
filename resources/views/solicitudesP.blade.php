@@ -93,6 +93,7 @@
                             <div class="col-md-12">
                                     @foreach($solicitudes as $solicitud)
                                     <div class="card mb-3 solicitud-card" data-solicitud-id="{{ $solicitud->id }}">
+
                                         <div class="row no-gutters">
                                             <div class="col-md-3">
                                                 <img src="imagenes/choco.jpeg" class="card-img" alt="Imagen del pedido">
@@ -135,11 +136,12 @@
                             <textarea class="form-control" id="descripcion"></textarea>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn" id="agregar">Agregar Nueva</button>
+                            <button type="button" class="btn" id="agregar">Agregar</button>
                             <button type="button" class="btn" id="modificar">Modificar</button>
                         </div>
                         <div class="form-group text-center">
-                            <button type="button" class="btn" id="cancelar">Cancelar (Eliminar)</button>
+                            <button type="button" class="btn" id="eliminar">Cancelar (Eliminar)</button>
+                            <input type="text" class="form-control" id="ide" style="display: none;">
                         </div>
                     </form>
                 </div>
@@ -156,20 +158,114 @@
             // Realizar una solicitud AJAX para obtener los detalles de la solicitud por su ID
             $.ajax({
                 type: 'GET',
-                url: '/solicitudes/' + solicitudId, // Ruta para obtener detalles de la solicitud
+                url: '/solicitudes/' + solicitudId + '/details', // Ruta para obtener detalles de la solicitud
                 success: function(response) {
                     // Llenar el formulario con los datos de la solicitud obtenidos
                     $('#nombre').val(response.nombre);
                     $('#fecha').val(response.fecha);
                     $('#pedido').val(response.pedido);
+                    $('#cantidad').val(response.cantidad);
                     $('#descripcion').val(response.descripcion);
+                    $('#ide').val(response.id);
                 },
                 error: function() {
                     alert('Error al cargar los detalles de la solicitud.');
                 }
             });
         });
+
+
+        $(document).ready(function() {
+        // Función para enviar la solicitud de agregado al servidor
+        $('#agregar').click(function() {
+            // Capturar los datos del formulario
+            var nombre = $('#nombre').val();
+            var fecha = $('#fecha').val();
+            var pedido = $('#pedido').val();
+            var cantidad  = $('#cantidad').val();
+            var descripcion = $('#descripcion').val();
+
+            // Realizar una solicitud AJAX para agregar la nueva solicitud
+            $.ajax({
+                type: 'POST',
+                url: '/solicitudes',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    nombre: nombre,
+                    fecha: fecha,
+                    pedido: pedido,
+                    cantidad: cantidad,
+                    descripcion: descripcion
+                },
+                success: function(response) {
+                    // Redireccionar a la página de solicitudes después de agregar la solicitud
+                    window.location.href = '/solicitudes';
+                },
+                error: function() {
+                    alert('Error al agregar la solicitud.');
+                }
+            });
+        });
     });
+
+        // Función para enviar la solicitud de modificación al servidor
+        $('#modificar').click(function() {
+            var solicitudId = $('#ide').val();
+
+            // Capturar los datos del formulario
+            var nombre = $('#nombre').val();
+            var fecha = $('#fecha').val();
+            var pedido = $('#pedido').val();
+            var cantidad = $('#cantidad').val();
+            var descripcion = $('#descripcion').val();
+
+            // Realizar una solicitud AJAX para modificar la solicitud con los nuevos datos
+            $.ajax({
+                type: 'PUT',
+                url: '/solicitudes/',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    nombre: nombre,
+                    fecha: fecha,
+                    pedido: pedido,
+                    cantidad: cantidad,
+                    descripcion: descripcion,
+                    idCuentaU: 1,
+                    idProducto: 2
+                },
+                success: function(response) {
+                    // Redireccionar a la página de solicitudes después de la modificación
+                    window.location.href = '/solicitudes';
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('Error al modificar la solicitud.');
+                }
+            });
+        });
+
+
+        // Función para enviar la solicitud de eliminación al servidor
+        $('#eliminar').click(function() {
+    var solicitudId = $('#ide').val();
+
+    // Realizar una solicitud AJAX para eliminar la solicitud
+    $.ajax({
+        type: 'DELETE',
+        url: '/solicitudes/' + solicitudId, // Agrega el ID de la solicitud a la URL
+        data: {
+            _token: '{{ csrf_token() }}' // Solo necesitas enviar el token CSRF
+        },
+        success: function(response) {
+            // Redireccionar a la página de solicitudes después de la eliminación
+            window.location.href = '/solicitudes';
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('Error al eliminar la solicitud.');
+        }
+    });
+});
 </script>
 
 

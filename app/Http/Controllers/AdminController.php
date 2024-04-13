@@ -16,9 +16,6 @@ class AdminController extends Controller
     public function regis(){
         return view('registroadmin');
     }
-    public function solicitudes(){
-        return view('solicitudesP');
-    }
     public function ventas(){
         return view('ventas');
     }

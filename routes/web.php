@@ -48,18 +48,17 @@ Route::get('/ventas/mes', 'VentaController@ventasPorMes');
 
 
 //De parte de admin
-Route::prefix('solicitudes')->group(function () {
-    Route::get('/', [solicitudController::class, 'mostrarSolicitudes'])->name('solicitudes');
-    
-});
 
 
-Route::get('/solicitudes/{id}', [SolicitudController::class, 'getSolicitudDetails'])->name('solicitudes.details');
-Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('solicitudes.store');
-Route::put('/solicitudes/{id}', [SolicitudController::class, 'update'])->name('solicitudes.update');
-Route::delete('/solicitudes/{id}', [SolicitudController::class, 'destroy'])->name('solicitudes.destroy');
+
+//Rutas para solicitudes
+
+
 
 Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
+
+
+
 
 //alta vista
 Route::get('alta', [AltasController::class, 'index'])->name('altas.index');
