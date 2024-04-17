@@ -11,6 +11,7 @@ use App\Http\Controllers\CuentaUController;
 use App\Http\Controllers\AltasController;
 use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CalculosController;
 
 
 Route::get('/', function () {
@@ -114,5 +115,7 @@ Route::get('/mostrar-solicitudes', [SolicitudController::class, 'mostrarSolicitu
 //Route::get('mostrarAlumnos', [AlumnoController::class, 'show_alumnos']);
 //Route::get('mostrarSolicitudes', [SolicitudController::class, 'show_solic']);
 
-
+Route::get('/calcular-pastel', function () {
+    return view('calcular_pastel'); // Nombre del archivo de la vista sin la extensión .blade.php
+});
 
