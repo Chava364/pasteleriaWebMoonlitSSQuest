@@ -101,5 +101,18 @@ Route::get('/mostrar-id-usuario', function () {
 
 Route::post('/registrar-cuenta', [CuentaUController::class, 'registrar'])->name('registrarCuenta');
 
+//Solicitdes rutas y funcionalidad XD
+Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('solicitudes.index');
+Route::get('/solicitudes/create', [SolicitudController::class, 'create'])->name('solicitudes.create');
+Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('solicitudes.store');
+Route::get('/solicitudes/{id}/edit', [SolicitudController::class, 'edit'])->name('solicitudes.edit');
+Route::put('/solicitudes/{id}', [SolicitudController::class, 'update'])->name('solicitudes.update');
+Route::delete('/solicitudes/{id}', [SolicitudController::class, 'destroy'])->name('solicitudes.destroy');
+Route::get('/solicitudes/{id}/details', [SolicitudController::class, 'getSolicitudDetails']);
+Route::get('/mostrar-solicitudes', [SolicitudController::class, 'mostrarSolicitudes']);
+
 //Route::get('mostrarAlumnos', [AlumnoController::class, 'show_alumnos']);
 //Route::get('mostrarSolicitudes', [SolicitudController::class, 'show_solic']);
+
+
+

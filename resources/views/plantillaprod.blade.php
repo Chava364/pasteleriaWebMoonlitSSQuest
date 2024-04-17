@@ -142,7 +142,7 @@
 
         <div class="description-input">
             <label for="description">Descripción:</label>
-            <textarea id="description" name="description" rows="4" cols="50" placeholder="Ingrese la descripción del producto"></textarea>
+            <textarea id="description" name="description" rows="4" cols="50" placeholder="Ingrese la descripción del pedido"></textarea>
         </div>
 
         <button type="submit" class="order-button">Agregar al Carrito</button>
